@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  django-app:
+    build: .
+    command: >
+      sh -c "init-db.sh &&
+             python manage.py collectstatic --noinput &&
+             gunicorn CustomerManagementApp.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120"
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+      - ./db.sqlite3:/app/db.sqlite3
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=django-insecure-liu67+u@)@1rf(-4hh=f25)qu+b*25v(@vbcc-hhey@8=2-sh2
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,*
+      - DJANGO_SETTINGS_MODULE=CustomerManagementApp.settings
+      - GUNICORN_WORKERS=3
+      - GUNICORN_TIMEOUT=120
+      - GUNICORN_BIND=0.0.0.0:8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  static_volume: 

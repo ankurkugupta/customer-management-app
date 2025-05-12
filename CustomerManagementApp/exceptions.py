@@ -1,3 +1,5 @@
+import json
+
 from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.views import exception_handler
@@ -12,6 +14,7 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
     if isinstance(exc,ValidationError):
+        # handle validation error raised from the service, repository
         if exc.messages:
             is_string=True
             for message in exc.messages:
@@ -19,14 +22,15 @@ def custom_exception_handler(exc, context):
                     is_string=False
                     break
             if is_string:
+                logger.info(f"Error {" ".join(exc.messages)}")
                 return Response({"status":"Failure","message":" ".join(exc.messages),"errors":[],"data":None},status=status.HTTP_400_BAD_REQUEST)
+            logger.info(f"Error {json.dumps(exc.messages)}")
             return Response({"status":"Failure","message":"Validation Errors","errors":exc.messages,"data":None},status=status.HTTP_400_BAD_REQUEST)
 
     if response is not None:
         # Let standard DRF error responses pass through
         return response
 
-    # Log the error (optional, but good practice)
     logger.error("Unhandled exception", exc_info=exc)
 
 

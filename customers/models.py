@@ -42,7 +42,7 @@ class CreateUpdateDeleteAbstractModel(CreateModel,UpdateModel,DeleteModel):
 
 class Customer(CreateUpdateDeleteAbstractModel):
     first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100,null=True,blank=True)
     phone_number = PhoneNumberField()
     date_of_birth = models.DateField()
 

@@ -3,7 +3,9 @@
 import json
 from rest_framework.renderers import JSONRenderer
 
+import logging
 
+logger = logging.getLogger(__name__)
 
 
 class CustomJSONRenderer(JSONRenderer):
@@ -20,7 +22,7 @@ class CustomJSONRenderer(JSONRenderer):
 
         if renderer_context:
             view = renderer_context.get('view')
-            if hasattr(view, 'custom_message'):
+            if hasattr(view, 'custom_message') and view.custom_message:
                 response_data["message"] = view.custom_message
             else:
                 if response.status_code >=500:
@@ -55,5 +57,9 @@ class CustomJSONRenderer(JSONRenderer):
 
             if "messages" in data:
                 response_data["errors"] = data["messages"]
+
+        if response_data["status"] == "Failure":
+            logger.info(f"errors-{json.dumps(response_data)}")
+
 
         return super().render(response_data, accepted_media_type, renderer_context)

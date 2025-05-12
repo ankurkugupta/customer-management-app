@@ -1,3 +1,4 @@
+import json
 import logging
 import uuid
 from threading import current_thread
@@ -16,8 +17,11 @@ class RequestIDMiddleware:
         request.request_id = request_id
 
         current_thread().request = request  # Bind request to current thread
-        logger.info("Request ID: %s", request_id,request.body)
-
+        start_time=timezone.now()
+        if request.body and "password" not in str(request.body):
+            logger.info(f"request_body {str(request.body)}")
         response = self.get_response(request)
         response["X-Request-ID"] = request_id
+        end_time=timezone.now()
+        logger.info(f"response_time-{end_time-start_time}")
         return response

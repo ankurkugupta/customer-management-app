@@ -4,7 +4,6 @@
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Running the Application Without Docker](#running-the-application-without-docker)
@@ -43,52 +42,52 @@ This dual-layered structure demonstrates both API-first development and traditio
 - **Docker**: Containerizes the application for consistent environments and simplified deployment.
 - **Git & GitHub**: Git for version control and GitHub for code hosting and collaboration.
 
-
 ## Project Structure
 
 ```
 CustomerManagementApp/
-├── CustomerManagementApp/              # Main project configuration
-│   ├── settings.py                     # Project settings
-│   ├── urls.py                         # Main URL configuration
-│   ├── wsgi.py                         # WSGI configuration
-│   ├── asgi.py                         # ASGI configuration
-│   ├── middlewares.py                  # Custom middleware
-│   ├── exceptions.py                   # Custom exceptions
-│   ├── renderers.py                    # Custom renderers
-│   └── logging_filters.py              # Logging filters
+├── CustomerManagementApp/              # Project configuration
+│   ├── __init__.py
+│   ├── settings.py                    # Project settings
+│   ├── urls.py                        # Main URL configuration
+│   ├── wsgi.py                        # WSGI configuration
+│   ├── asgi.py                        # ASGI configuration
+│   ├── exceptions.py                  # Custom exception handlers
+│   ├── middlewares.py                 # Custom middleware
+│   ├── renderers.py                   # Custom response renderers
+│   └── logging_filters.py             # Custom logging filters
 │
-├── customers/                          # Customer management app
-│   ├── domain/                         # Domain layer (Clean Architecture)
-│   │   ├── interfaces/                 # Abstract interfaces
-│   │   │   └── customer_repository.py  # Repository interface definitions
-│   │   ├── services.py                 # Business logic services
-│   │   └── service_factory.py          # Service factory for dependency injection
+├── customers/                         # Customer management app
+│   ├── domain/                        # Domain layer
+│   │   ├── interfaces/                # Interface definitions
+│   │   │   └── customer_repository.py # Repository interface
+│   │   ├── services.py               # Business logic
+│   │   └── service_factory.py        # Service factory
 │   │
-│   ├── interface/                      # Interface layer
-│   │   ├── apis.py                     # REST API endpoints
-│   │   ├── views.py                    # Web interface views
-│   │   ├── forms.py                    # Form definitions
-│   │   ├── serializers.py              # API serializers
-│   │   ├── urls.py                     # API URL routing
-│   │   └── view_urls.py                # Web URL routing
+│   ├── interface/                     # Interface layer
+│   │   ├── apis.py                   # REST API endpoints
+│   │   ├── forms.py                  # Form definitions
+│   │   ├── serializers.py            # API serializers
+│   │   ├── views.py                  # View functions
+│   │   └── view_urls.py              # View URL patterns
 │   │
-│   ├── repositories/                   # Data access layer
-│   │   ├── respository.py              # Repository implementations
-│   │   ├── repo_factories.py           # Repository factory
-│   │   ├── querysets.py                # Custom querysets
-│   │   ├── selectors.py                # Query selectors
-│   │   └── entities.py                 # Data entities
+│   ├── repositories/                  # Data access layer
+│   │   ├── repository.py             # Repository implementation
+│   │   ├── repo_factories.py         # Repository factory
+│   │   └── querysets.py              # Custom querysets
 │   │
-│   ├── migrations/                     # Database migrations
-│   ├── models.py                       # Customer models
-│   ├── admin.py                        # Admin configurations
-│   ├── tests.py                        # Test cases
-│   └── apps.py                         # App configuration
+│   ├── migrations/                    # Database migrations
+│   ├── models.py                      # Customer models
+│   ├── admin.py                       # Admin configurations
+│   ├── tests.py                       # Test cases
+│   └── apps.py                        # App configuration
 │
 ├── users/                             # User management app
 │   ├── apis/                          # API endpoints
+│   │   └── health_check_apis.py      # Health check endpoints
 │   ├── urls/                          # URL configurations
+│   │   ├── api.py                    # API URLs
+│   │   └── view.py                   # View URLs
 │   ├── migrations/                    # Database migrations
 │   ├── models.py                      # User models
 │   ├── views.py                       # View functions
@@ -100,39 +99,52 @@ CustomerManagementApp/
 │   └── apps.py                        # App configuration
 │
 ├── common/                            # Shared utilities
+│   ├── exceptions.py                  # Common exceptions
+│   ├── validators.py                  # Common validators
+│   └── apis.py                        # Base API classes
+│
 ├── templates/                         # HTML templates
+│   ├── customers/                     # Customer templates
+│   └── users/                         # User templates
+│
+├── static/                           # Static files
+│   ├── css/                          # CSS files
+│   ├── js/                           # JavaScript files
+│   └── images/                       # Image files
+│
 ├── logs/                             # Application logs
 ├── manage.py                         # Django management script
-└── db.sqlite3                        # SQLite database
+├── requirements.txt                  # Project dependencies
+├── .env                              # Environment variables
+├── .gitignore                        # Git ignore file
+└── README.md                         # Project documentation
 ```
 
 
 ## Getting Started
 
 ### Prerequisites
-- **Python 3.8+**
+
 - **Docker and Docker Compose** (if running in Docker)
 
 ### Running the Application Without Docker
+- **virtual environment on Python 3.12+**
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-repo/customer-management.git
-    cd customer-management
+    gh repo clone ankurkugupta/customer-management-app
+    cd CustomerManagementApp
     ```
 
 2. Install dependencies:
     ```bash
     pip install -r requirements.txt
+
     ```
 
 3. Set up the database:
-    ```bash
-    python manage.py migrate
     ```
-
-   if error is ```no such table: mainapi_customer```
-    ```bash    
-    python manage.py makemigrations mainapi
+    python manage.py migrate
+    python manage.py makemigrations
     python manage.py migrate
     ```
 
@@ -146,8 +158,8 @@ CustomerManagementApp/
 ### Running the Application With Docker Compose
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-repo/customer-management.git
-    cd customer-management
+    gh repo clone ankurkugupta/customer-management-app
+    cd CustomerManagementApp
     ```
 
 2. Start the application with Docker Compose:
@@ -155,13 +167,24 @@ CustomerManagementApp/
     docker-compose up --build
     ```
 
-3. Access the application at `http://127.0.0.1:8000`.
+3. Access the application at 
+    ```
+    http://127.0.0.1:8000
+    http://localhost:8000/admin
+    ```
 
-To stop the application:
-```bash
-docker-compose down
-```
+4. To stop the application:
+    ```
+    docker-compose down
+    ```
 
+5.  Resetting the Database
+    ```
+    docker-compose down
+    rm db.sqlite3
+    docker-compose up --build
+     ```
+    
 ## APIs
 - **`api/v1/user/register/`** -- user registraion
 - **`api/v1/user/token/`** -- user login via API
@@ -171,6 +194,8 @@ docker-compose down
 - **`api/v1/customers/<id>/update/`** -- customer update api
 - **`api/v1/customers/<id>/delete/`** -- customer delete api
 - **`api/v1/user/logout/`** -- user logout api - (blacklist refresh token)
+- **`swagger/`** -- open api swagger view
+- **`redoc/`** -- open api swagger-doc view
 
 
 
