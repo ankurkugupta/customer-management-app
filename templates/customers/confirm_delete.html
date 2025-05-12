@@ -1,0 +1,68 @@
+{% extends 'users/base.html' %}
+{% block title %}Confirm Delete{% endblock %}
+{% block style %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .delete-container {
+            margin-top: 80px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container delete-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h4>Delete Customer</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">Are you sure you want to delete the following customer?</p>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Customer ID</th>
+                            <td>{{ customer.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Full Name</th>
+                            <td>{{ customer.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td>{{ customer.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{ customer.date_of_birth }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ customer.customer_age }}</td>
+                        </tr>
+                    </table>
+
+                    <form method="POST" class="text-center mt-4">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+
+                    {% if messages %}
+                        <div class="mt-4">
+                            {% for message in messages %}
+                                <div class="alert alert-warning text-center" role="alert">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'users/base.html' %}
+{% block title %}Login{% endblock %}
+{% block style %}
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .login-container {
+            margin-top: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h4 class="mb-0">Login to CMA</h4>
+                </div>
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                    <div class="mb-3">
+                        <p class="text-center">You are already logged in.</p>
+                        </div>
+
+<div class="mb-3 text-center">
+                    <a href="{% url 'dashboard' %}" class="text-center"><button class="btn btn-primary text-center">Go to Dashboard</button></a>
+</div>
+                    {% else %}
+
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password_field" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password_field" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div>
+                <p class="text-center mt-3">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+            </div>
+              {% endif %}
+
+            <p class="text-center text-muted mt-3">© {{ year|default:2025 }} Customer Management Application</p>
+        </div>
+    </div>
+</div><br>
+
+
+
+<br>
+<div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-primary" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+</div>
+
+{% endblock %}

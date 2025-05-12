@@ -1,0 +1,13 @@
+*/migrations/
+*/migrations/*.py
+*/migrations/*.pyc
+
+
+*.sqlite3
+
+*/__pycache__/
+local_settings.py
+
+logs/
+
+readme1.md
