@@ -132,8 +132,8 @@ CustomerManagementApp/
 0. **virtual environment on Python 3.12+**
 1. Clone the repository:
     ```bash
-    gh repo clone ankurkugupta/customer-management-app
-    cd CustomerManagementApp
+    git clone git@github.com:ankurkugupta/customer-management-app.git
+    cd customer-management-app
     ```
 
 2. Install dependencies:
@@ -175,33 +175,35 @@ CustomerManagementApp/
 ### Running the Application With Docker Compose
 1. Clone the repository:
     ```bash
-    gh repo clone ankurkugupta/customer-management-app
-    cd CustomerManagementApp
+    git clone git@github.com:ankurkugupta/customer-management-app.git
+    cd customer-management-app
     ```
 
-2. Start the application with Docker Compose:
+2. Create necessary directories and file:
+    ```bash
+    mkdir -p logs static staticfiles data
+    chmod -R 777 logs static staticfiles data
+    touch db.sqlite3  
+    ```
+
+3. Start the application with Docker Compose:
     ```bash
     docker-compose up --build
     ```
 
-3. Access the application at 
+4. Access the application at 
     ```
     http://127.0.0.1:8000
     http://localhost:8000/admin
     ```
 
-4. To stop the application:
+5. To stop the application:
     ```bash
     docker-compose down
     ```
 
-5.  Resetting the Database
-    ```bash
-    docker-compose down
-    rm db.sqlite3
-    docker-compose up --build
-     ```
-    
+
+
 ## APIs
 - **`api/v1/user/register/`** -- user registraion
 - **`api/v1/user/token/`** -- user login via API

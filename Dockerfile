@@ -35,8 +35,9 @@ COPY users/ users/
 COPY templates/ templates/
 COPY common/ common/
 
-# Create necessary directories
-RUN mkdir -p logs static staticfiles
+# Create necessary directories and set permissions
+RUN mkdir -p logs static staticfiles   && \
+    chmod -R 777 logs static staticfiles
 
 # Create initialization script in /usr/local/bin
 RUN echo '#!/bin/bash\n\
@@ -44,8 +45,9 @@ echo "Checking database..."\n\
 cd /app\n\
 if [ ! -s "db.sqlite3" ]; then\n\
     echo "Database does not exist or is empty. Creating new database..."\n\
-    python manage.py makemigrations\n\
-    python manage.py migrate\n\
+    python manage.py makemigrations users\n\
+    python manage.py makemigrations customers\n\
+    python manage.py migrate \n\
     echo "Database created successfully."\n\
 else\n\
     echo "Using existing database."\n\
