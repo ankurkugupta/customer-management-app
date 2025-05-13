@@ -139,22 +139,39 @@ CustomerManagementApp/
 2. Install dependencies:
     ```bash
     pip install -r requirements.txt
-
+    ```
+3. create log and static files folder
+    ```bash 
+    mkdir -p logs static staticfiles
     ```
 
-3. Set up the database:
+3. add environment variables in .env:
+```aiignore
+    DEBUG=1
+    SECRET_KEY=<secret_key>
+    ALLOWED_HOSTS=localhost,127.0.0.1
+    DJANGO_SETTINGS_MODULE=CustomerManagementApp.settings
+```
+
+
+4. Set up the database:
     ```bash
     python manage.py migrate
-    python manage.py makemigrations
+    python manage.py makemigrations users
+    python manage.py makemigrations customers
     python manage.py migrate
     ```
+5. Run collectstatic command
+    ```bash
+    python manage.py collectstatic
+    ```
 
-4. Run the development server:
+5. Run the development server:
     ```bash
     python manage.py runserver
     ```
-
-5. Access the application at `http://127.0.0.1:8000`.
+   
+6. Access the application at `http://127.0.0.1:8000`.
 
 ### Running the Application With Docker Compose
 1. Clone the repository:
