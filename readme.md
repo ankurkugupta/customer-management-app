@@ -125,10 +125,11 @@ CustomerManagementApp/
 
 ### Prerequisites
 
+- **python 3.12**
 - **Docker and Docker Compose** (if running in Docker)
 
 ### Running the Application Without Docker
-- **virtual environment on Python 3.12+**
+0. **virtual environment on Python 3.12+**
 1. Clone the repository:
     ```bash
     gh repo clone ankurkugupta/customer-management-app
@@ -142,7 +143,7 @@ CustomerManagementApp/
     ```
 
 3. Set up the database:
-    ```
+    ```bash
     python manage.py migrate
     python manage.py makemigrations
     python manage.py migrate
@@ -174,12 +175,12 @@ CustomerManagementApp/
     ```
 
 4. To stop the application:
-    ```
+    ```bash
     docker-compose down
     ```
 
 5.  Resetting the Database
-    ```
+    ```bash
     docker-compose down
     rm db.sqlite3
     docker-compose up --build
