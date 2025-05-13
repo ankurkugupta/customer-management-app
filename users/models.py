@@ -9,10 +9,9 @@ from django.utils.translation import gettext_lazy as _
 class User(AbstractUser):
     first_name = models.CharField(_("first name"), max_length=150,)
     last_name = models.CharField(_("last name"), max_length=150)
-    email = models.EmailField(_("email address"))
-    phone_number = PhoneNumberField(unique=True)
+    email = models.EmailField(_("email address"),unique=True)
+    phone_number = PhoneNumberField(unique=True,null=True,blank=True)
 
     class Meta:
-        unique_together = ("email", "phone_number")
         verbose_name = "User"
         verbose_name_plural = "Users"

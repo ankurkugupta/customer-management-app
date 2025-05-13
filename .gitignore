@@ -15,3 +15,5 @@ readme1.md
 .env
 
 docker_files
+static
+staticfiles

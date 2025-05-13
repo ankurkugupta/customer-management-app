@@ -162,7 +162,7 @@ CustomerManagementApp/
     ```
 5. Run collectstatic command
     ```bash
-    python manage.py collectstatic
+     python manage.py collectstatic --noinput --clear
     ```
 
 5. Run the development server:
