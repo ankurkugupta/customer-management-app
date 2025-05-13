@@ -68,7 +68,7 @@ class CustomerRepository(AbstractCustomerRepository):
                 customer.updated_by_id = updated_by_id
                 customer.full_clean()
                 customer.save()
-                logger.info(f"customer {customer.id} field updated by {updated_by_id}",updated_fields)
+                logger.info(f"customer {customer.id} field updated by {updated_by_id} {",".join(updated_fields)}",)
             return customer
         except ValidationError as e:
             if "phone_number_unique" in str(e):
