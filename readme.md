@@ -156,7 +156,6 @@ CustomerManagementApp/
 
 4. Set up the database:
     ```bash
-    python manage.py migrate
     python manage.py makemigrations users
     python manage.py makemigrations customers
     python manage.py migrate
